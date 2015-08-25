@@ -6,9 +6,7 @@ A small utility to help with CLJS/JS/CSS asset building and minification.
 
 #### Artifact Coordinates
 
-```clojure
-[xsc/asset-builder "0.1.0"]
-```
+[![Clojars Project](http://clojars.org/xsc/asset-builder/latest-version.svg)](http://clojars.org/xsc/asset-builder)
 
 #### Inclusion
 
