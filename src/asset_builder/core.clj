@@ -75,8 +75,10 @@
   [{:keys [cljs-path cljs]}]
   (with-reporting ["Compiling ClojureScript ..."
                    "ClojureScript has been compiled."]
-    (->> {:verbose true}
-         (merge cljs)
+    (->> (merge
+           {:output-dir "target/out"}
+           cljs
+           {:verbose true})
          (cljs-build! cljs-path))))
 
 ;; ## Assets
