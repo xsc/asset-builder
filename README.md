@@ -54,7 +54,7 @@ In the REPL, you can now run:
 (build/run)
 ```
 
-Note that adding the `-main` function is optional but wiill let you to add an
+Note that adding the `-main` function is optional but allows you to add an
 alias as described in the following section.
 
 #### Aliases
