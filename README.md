@@ -78,6 +78,9 @@ Contributions are always welcome!
 ## Shoulders/Giants
 
 - [asset-minifier](https://github.com/yogthos/asset-minifier)
+- And someone will inevitably say: "Why don't you just use [boot][boot]?"
+
+[boot]: https://github.com/boot-clj/boot
 
 ## License
 
