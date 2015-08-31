@@ -34,7 +34,9 @@
 (defn- print-exception
   [start-time exception]
   (let [delta-str (format "[%.3fs]" (/ (- (System/nanoTime) start-time) 1e9))]
-    (.printStackTrace exception *out*)
+    (if (instance? clojure.lang.ExceptionInfo exception)
+      (.printStackTrace exception)
+      (.printStackTrace exception *out*))
     (flush)
     (->> (vector "!"
                  (->> (iterate #(.getCause %) exception)
