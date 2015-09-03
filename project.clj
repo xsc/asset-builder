@@ -1,4 +1,4 @@
-(defproject xsc/asset-builder "0.1.1"
+(defproject xsc/asset-builder "0.1.2-SNAPSHOT"
   :description "Utility for CLJS + Asset Building"
   :url "https://github.com/xsc/asset-builder"
   :license {:name "MIT License"
