@@ -2,6 +2,8 @@
 
 A small utility to help with CLJS/JS/CSS asset building and minification.
 
+[![Build Status](https://travis-ci.org/xsc/asset-builder.svg?branch=master)](https://travis-ci.org/xsc/asset-builder)
+
 ## Usage
 
 #### Artifact Coordinates
