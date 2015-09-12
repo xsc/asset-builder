@@ -3,16 +3,18 @@
              [cljs :as cljs]
              [minify :as minify]]))
 
-;; ## Builders
+;; ## Default Builders
 
-(def ^:private builders
+(def default-builders
   [[:cljs   cljs/build]
    [:assets minify/build]])
 
 ;; ## Logic
 
+(def ^:dynamic *internal-print-fn* println)
+
 (defn- generate-build-steps
-  [opts]
+  [builders opts]
   (for [[k f] builders
         :when (contains? opts k)]
     #(try
@@ -21,20 +23,23 @@
          ::error))))
 
 (defn- generate-all-build-steps
-  [asset-opts]
-  (-> (mapcat generate-build-steps asset-opts)
-      (interleave (repeat println))))
+  [builders asset-opts]
+  (-> (mapcat #(generate-build-steps builders %) asset-opts)
+      (interleave (repeat *internal-print-fn*))))
 
 ;; ## Build
 
 (defn build*
-  [asset-opts]
-  (let [steps (generate-all-build-steps asset-opts)]
-    (dorun
-      (for [step steps
-            :let [result (step)]
-            :while (not= ::error result)]
-        result))))
+  [builders asset-opts]
+  (when (seq asset-opts)
+    (let [steps (generate-all-build-steps builders asset-opts)]
+      (when-not (seq steps)
+        (*internal-print-fn* "WARN: no builders matched your options (typo?)."))
+      (dorun
+        (for [step steps
+              :let [result (step)]
+              :while (not= ::error result)]
+          result)))))
 
 (defn build
   "Build CLJS/JS/CSS assets. The following options are allowed:
@@ -45,4 +50,4 @@
      `:asset-path` or absolute).
    Assets will be minified according to their filename."
   [& asset-opts]
-  (build* asset-opts))
+  (build* default-builders asset-opts))
