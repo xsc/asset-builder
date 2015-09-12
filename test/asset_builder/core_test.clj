@@ -1,6 +1,8 @@
 (ns asset-builder.core-test
   (:require [clojure.test :refer :all]
-            [asset-builder.core :as assets]))
+            [asset-builder.core :as assets]
+            [clojure.java.io :as io])
+  (:import [org.apache.commons.io FileUtils]))
 
 ;; ## Helpers
 
@@ -71,3 +73,22 @@
           (is (nil? (assets/build* builders [{:a {}, :b {}}])))
           (is (built? builders :a))
           (is (error? builders :b)))))))
+
+(deftest t-build
+  (testing "actual two-phase build."
+    (let [out-dir (doto (io/file "target/out")
+                    (FileUtils/deleteDirectory))
+          exists? #(.isFile (io/file out-dir %))]
+      (is (not (.exists out-dir)))
+      (->> (assets/build
+             {:assets {"test/data/style.css"  "target/out/style.min.css"
+                       "test/data/support.js" "target/out/support.min.js"}}
+             {:cljs-path "test"
+              :cljs {:output-to     "target/out/test.js"
+                     :output-dir    "target/out"
+                     :optimizations :whitespace}})
+           (nil?)
+           (is))
+      (is (exists? "style.min.css"))
+      (is (exists? "support.min.js"))
+      (is (exists? "test.js")))))
