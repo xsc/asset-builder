@@ -56,7 +56,7 @@
          result#)
        (catch Throwable t#
          (print-exception start# t#)
-         ::error))))
+         (throw t#)))))
 
 ;; ## Helpers
 

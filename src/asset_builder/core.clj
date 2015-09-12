@@ -15,7 +15,10 @@
   [opts]
   (for [[k f] builders
         :when (contains? opts k)]
-    #(f opts)))
+    #(try
+       (f opts)
+       (catch Throwable _
+         ::error))))
 
 (defn- generate-all-build-steps
   [asset-opts]
