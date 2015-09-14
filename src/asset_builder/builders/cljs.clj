@@ -1,4 +1,4 @@
-(ns asset-builder.cljs
+(ns asset-builder.builders.cljs
   (:require [asset-builder.reporting :refer [with-reporting]]))
 
 (defonce cljs-build!

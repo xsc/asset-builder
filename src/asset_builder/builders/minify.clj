@@ -1,4 +1,4 @@
-(ns asset-builder.minify
+(ns asset-builder.builders.minify
   (:require [asset-builder.reporting :refer [with-reporting ->kb]]
             [asset-minifier.core :as assets]
             [clojure.java.io :as io]))

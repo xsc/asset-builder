@@ -1,5 +1,5 @@
 (ns asset-builder.core
-  (:require [asset-builder
+  (:require [asset-builder.builders
              [cljs :as cljs]
              [minify :as minify]]))
 
