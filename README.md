@@ -36,12 +36,14 @@ the build logic:
 (defn run
   []
   (assets/build
-    {:cljs-path "src/cljs"
-     :cljs {:output-to "resources/js/main.js"
-            :output-dir "target/out"
-            :optimizations :advanced}
-     :asset-path "resources"
-     :assets {"js/external-script.js" "js/external-script.min.js"}}))
+    {:cljs   {:source-path "src/cljs"
+              :output-to "resources/js/main.js"
+              :output-dir "target/out"
+              :optimizations :advanced}
+     :assets {:source-path "resources/js"
+              :target-path"resources/js"
+              :minify
+              {"external-script.js" "external-script.min.js"}}))
 
 (defn -main
   []
@@ -80,8 +82,8 @@ them in the order they are supplied, so you can do something like:
 
 ```clojure
 (assets/build
-  {:cljs   {:output-to "resources/js/main.js"}}
-  {:assets {"resources/js/main.js" "resources/js/main.min.js"}})
+  {:cljs   {:output-to "resources/js/main.js", ...}}
+  {:assets {:minify {"resources/js/main.js" "resources/js/main.min.js"}}})
 ```
 
 Also, `nil` values are ignored, so you can have conditional build steps quite
