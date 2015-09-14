@@ -73,6 +73,27 @@ For automatic building (outside the REPL) you can add the following aliases
  "deploy"  ["do" "build," "deploy"]}
 ```
 
+#### Multiple Build Steps
+
+`asset-builder.core/build` accepts any number of build specifications, running
+them in the order they are supplied, so you can do something like:
+
+```clojure
+(assets/build
+  {:cljs   {:output-to "resources/js/main.js"}}
+  {:assets {"resources/js/main.js" "resources/js/main.min.js"}})
+```
+
+Also, `nil` values are ignored, so you can have conditional build steps quite
+easily:
+
+```clojure
+(assets/build
+  (when (build? :cljs)
+    {:cljs ...})
+  ...)
+```
+
 ## Contributing
 
 Contributions are always welcome!
