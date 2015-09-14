@@ -51,8 +51,12 @@
 ;; ## Build
 
 (defn build
-  [{:keys [asset-path assets]}]
-  (with-reporting ["Minifying Assets ..."
-                   "Assets have been minified."]
-    (doseq [[source-paths target-path] assets]
-      (minify-asset asset-path source-paths target-path))))
+  [assets]
+  (let [source-base (:source-path assets "resources")]
+    (with-reporting [(format "Minifying Assets [%s] ..." source-base)
+                     "Assets have been minified."]
+      (doseq [[source-paths target-path] (:minify assets)]
+        (minify-asset
+          source-base
+          source-paths
+          target-path)))))

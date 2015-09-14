@@ -16,9 +16,10 @@
 (defn- generate-build-steps
   [builders opts]
   (for [[k f] builders
-        :when (contains? opts k)]
+        :let [build-opts (get opts k ::none)]
+        :when (not= build-opts ::none)]
     #(try
-       (f opts)
+       (f build-opts)
        (catch Throwable _
          ::error))))
 

@@ -13,11 +13,13 @@
           "dependency 'org.clojure/clojurescript' missing (or incompatible).")))))
 
 (defn build
-  [{:keys [cljs-path cljs]}]
-  (with-reporting ["Compiling ClojureScript ..."
-                   "ClojureScript has been compiled."]
+  [{:keys [source-path]
+    :or {source-path "src/cljs"}
+    :as cljs}]
+  (with-reporting [(format "Compiling ClojureScript [%s] ..." source-path)
+                   (format "ClojureScript [%s] has been compiled." source-path)]
     (->> (merge
            {:output-dir "target/out"}
            cljs
            {:verbose true})
-         (cljs-build! cljs-path))))
+         (cljs-build! source-path))))
