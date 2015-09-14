@@ -41,7 +41,7 @@ the build logic:
               :output-dir "target/out"
               :optimizations :advanced}
      :assets {:source-path "resources/js"
-              :target-path"resources/js"
+              :target-path "resources/js"
               :minify
               {"external-script.js" "external-script.min.js"}}))
 
