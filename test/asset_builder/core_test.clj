@@ -81,8 +81,10 @@
           exists? #(.isFile (io/file out-dir %))]
       (is (not (.exists out-dir)))
       (->> (assets/build
-             {:assets {:minify {"test/data/style.css"  "target/out/style.min.css"
-                                "test/data/support.js" "target/out/support.min.js"}}}
+             {:assets {:source-path "test/data"
+                       :target-path "target/out"
+                       :minify {"style.css"  "style.min.css"
+                                "support.js" "support.min.js"}}}
              {:cljs {:source-path   "test"
                      :output-to     "target/out/test.js"
                      :output-dir    "target/out"

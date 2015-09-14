@@ -26,20 +26,26 @@
 
 ;; ## Minification
 
+(defn- ->base
+  [base path]
+  (let [f (io/file path)]
+    (if (.isAbsolute f)
+      path
+      (.getPath (io/file base path)))))
+
+(defn- ->base-vec
+  [base paths]
+  (->> (if (sequential? paths) paths [paths])
+       (map #(->base base %))))
+
 (defn- minify-asset
-  [base-path source-paths target-path]
-  (let [dir (io/file base-path)
-        ->path #(let [f (io/file %)]
-                  (if (.isAbsolute f)
-                    %
-                    (.getPath (io/file dir %))))
-        sources (->> (if (sequential? source-paths)
-                       source-paths
-                       (vector source-paths))
-                     (map ->path))
-        target (->path target-path)
-        minify-fn (match-minifier-for-all sources)
-        result (minify-fn sources target)
+  [source-base target-base source-paths target-path]
+  (let [source-dir (io/file source-base)
+        target-dir (io/file target-base)
+        sources    (->base-vec source-dir source-paths)
+        target     (->base target-dir target-path)
+        minify-fn  (match-minifier-for-all sources)
+        result     (minify-fn sources target)
         {:keys [warning errors original-size compressed-size]} result]
     (printf "* %s (%s) -> %s (%s)%n"
             source-paths
@@ -52,11 +58,15 @@
 
 (defn build
   [assets]
-  (let [source-base (:source-path assets "resources")]
-    (with-reporting [(format "Minifying Assets [%s] ..." source-base)
+  (let [source-base (:source-path assets "resources")
+        target-base (:target-path assets source-base)]
+    (with-reporting [(format "Minifying Assets [%s -> %s] ..."
+                             source-base
+                             target-base)
                      "Assets have been minified."]
       (doseq [[source-paths target-path] (:minify assets)]
         (minify-asset
           source-base
+          target-base
           source-paths
           target-path)))))
