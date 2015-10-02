@@ -88,9 +88,12 @@
              {:cljs {:source-path   "test"
                      :output-to     "target/out/test.js"
                      :output-dir    "target/out"
-                     :optimizations :whitespace}})
+                     :optimizations :whitespace}}
+             {:assets {:source-path   "target/out"
+                       :concat {["support.min.js" "test.js"] "main.js"}}})
            (nil?)
            (is))
       (is (exists? "style.min.css"))
       (is (exists? "support.min.js"))
+      (is (exists? "main.js"))
       (is (exists? "test.js")))))
