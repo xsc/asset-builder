@@ -7,5 +7,5 @@
             :key "mit"}
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.107" :scope "provided"]
-                 [asset-minifier "0.1.6"]]
+                 [asset-minifier "0.1.7"]]
   :pedantic? :abort)
