@@ -5,7 +5,10 @@
   (or
     (try
       (require 'cljs.build.api)
-      (some-> (resolve 'cljs.build.api/build) deref)
+      (let [build (some-> (resolve 'cljs.build.api/build) deref)
+            inputs (some-> (resolve 'cljs.build.api/inputs) deref)]
+        (fn [paths options]
+          (build (apply inputs paths) options)))
       (catch Throwable _))
     (fn [& _]
       (throw
@@ -13,13 +16,15 @@
           "dependency 'org.clojure/clojurescript' missing (or incompatible).")))))
 
 (defn build
-  [{:keys [source-path]
-    :or {source-path "src/cljs"}
+  [{:keys [source-path source-paths]
+    :or {source-paths ["src/cljs"]}
     :as cljs}]
-  (with-reporting [(format "Compiling ClojureScript [%s] ..." source-path)
-                   (format "ClojureScript [%s] has been compiled." source-path)]
-    (->> (merge
-           {:output-dir "target/out"}
-           (dissoc cljs :source-path)
-           {:verbose true})
-         (cljs-build! source-path))))
+  (let [paths (or (some-> source-path vector)
+                  (vec source-paths))]
+    (with-reporting [(format "Compiling ClojureScript %s ..." paths)
+                     (format "ClojureScript %s has been compiled." paths)]
+      (->> (merge
+             {:output-dir "target/out"}
+             (dissoc cljs :source-path :source-paths)
+             {:verbose true})
+           (cljs-build! paths)))))
