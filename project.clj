@@ -5,7 +5,7 @@
             :url "http://opensource.org/licenses/MIT"
             :year 2015
             :key "mit"}
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.8.0" :scope "provided"]
                  [org.clojure/clojurescript "1.8.51" :scope "provided"]
                  [asset-minifier "0.1.8"]]
   :pedantic? :abort)
