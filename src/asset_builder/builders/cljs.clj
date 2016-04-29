@@ -20,6 +20,6 @@
                    (format "ClojureScript [%s] has been compiled." source-path)]
     (->> (merge
            {:output-dir "target/out"}
-           cljs
+           (dissoc cljs :source-path)
            {:verbose true})
          (cljs-build! source-path))))
