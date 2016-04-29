@@ -6,6 +6,6 @@
             :year 2015
             :key "mit"}
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.7.170" :scope "provided"]
-                 [asset-minifier "0.1.7"]]
+                 [org.clojure/clojurescript "1.8.51" :scope "provided"]
+                 [asset-minifier "0.1.8"]]
   :pedantic? :abort)
