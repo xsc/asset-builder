@@ -36,7 +36,7 @@ the build logic:
 (defn run
   []
   (assets/build
-    {:cljs   {:source-path "src/cljs"
+    {:cljs   {:source-paths ["src/cljs"]
               :output-to "resources/js/main.js"
               :output-dir "target/out"
               :optimizations :advanced}
