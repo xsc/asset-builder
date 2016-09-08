@@ -7,5 +7,7 @@
             :key "mit"}
   :dependencies [[org.clojure/clojure "1.8.0" :scope "provided"]
                  [org.clojure/clojurescript "1.8.51" :scope "provided"]
-                 [asset-minifier "0.1.8"]]
+                 [com.google.javascript/closure-compiler "v20160315" :scope "provided"]
+                 [asset-minifier "0.1.8"
+                  :exclusions [com.google.javascript/closure-compiler]]]
   :pedantic? :abort)
