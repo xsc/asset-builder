@@ -45,10 +45,6 @@ the build logic:
               :minify
               {"external-script.js" "external-script.min.js"}}))
 
-(defn -main
-  []
-  (run)
-  (System/exit 0))
 ```
 
 In the REPL, you can now run:
@@ -58,9 +54,6 @@ In the REPL, you can now run:
 (build/run)
 ```
 
-Note that adding the `-main` function is optional but allows you to add an
-alias as described in the following section.
-
 #### Aliases
 
 For automatic building (outside the REPL) you can add the following aliases
@@ -68,7 +61,7 @@ For automatic building (outside the REPL) you can add the following aliases
 
 ```clojure
 :aliases
-{"build"   ["with-profile" "+build" "run" "-m" "build"]
+{"build"   ["with-profile" "+build" "run" "-m" "build/run"]
  "jar"     ["do" "build," "jar"]
  "uberjar" ["do" "build," "uberjar"]
  "install" ["do" "build," "install"]
